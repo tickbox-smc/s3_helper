@@ -34,7 +34,7 @@ class S3helper:
         }
         dirs = []
         keys = []
-        tmp_file = '/tmp/tree_file'
+        tmp_file = 'tree_file'
 
         while self.next_token is not None:
             kwargs = base_kwargs.copy()
@@ -80,13 +80,13 @@ class S3helper:
         change2dir = os.sep.join(dl_path_arr[:-1])
         os.chdir(change2dir)
         
-        os.system("tree "+ self.bucket + "> " + tmp_file)
-        with open(tmp_file, 'r') as file:
+        os.system("tree "+ self.bucket + "> " + self.local + "/" + tmp_file)
+        with open(self.local + "/" + tmp_file, 'r') as file:
             data = file.read()
         file.close()
 
         shutil.rmtree(change2dir)
-        os.remove(tmp_file)
+        os.remove(self.local + "/" + tmp_file)
 
         return(data)
 
